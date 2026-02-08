@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Value Maximizer - AI-Powered Property Analysis</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>🏡 Home Value Maximizer</h1>
+                <p class="subtitle">AI-powered analysis to maximize your home's value with strategic improvements</p>
+            </div>
+        </header>
+
+        <!-- Page 1: Property Information -->
+        <div class="page active" id="page1">
+            <div class="card">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <h2>Property Information</h2>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="currentValue">Current Home Value *</label>
+                        <input type="number" id="currentValue" placeholder="e.g., 350000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="squareFeet">Square Footage *</label>
+                        <input type="number" id="squareFeet" placeholder="e.g., 2000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bedrooms">Bedrooms *</label>
+                        <input type="number" id="bedrooms" placeholder="e.g., 3" min="1" max="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bathrooms">Bathrooms *</label>
+                        <input type="number" id="bathrooms" placeholder="e.g., 2.5" min="1" max="10" step="0.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="yearBuilt">Year Built *</label>
+                        <input type="number" id="yearBuilt" placeholder="e.g., 1995" min="1800" max="2024" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyType">Property Type *</label>
+                        <select id="propertyType" required>
+                            <option value="">Select...</option>
+                            <option value="single-family">Single Family Home</option>
+                            <option value="condo">Condo/Townhouse</option>
+                            <option value="multi-family">Multi-Family</option>
+                            <option value="land">Land</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 2rem;">
+                    <label for="address">Property Address (Optional)</label>
+                    <input type="text" id="address" placeholder="123 Main St, City, State ZIP">
+                </div>
+
+                <div class="form-group" style="margin-top: 1.5rem;">
+                    <label for="additionalNotes">Additional Property Details (Optional)</label>
+                    <textarea id="additionalNotes" rows="4" placeholder="Any additional information about your property that might be helpful..."></textarea>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <button class="btn-primary btn-next" onclick="goToPage(2)">
+                    Next: Upload Photos
+                    <span>→</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Page 2: Photo Upload -->
+        <div class="page" id="page2">
+            <div class="card">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <h2>Upload Property Photos</h2>
+                </div>
+                <p class="section-description">Upload photos of different areas of your property for AI analysis. This helps us provide more accurate recommendations.</p>
+
+                <div class="upload-categories">
+                    <div class="upload-category">
+                        <h3>🏠 Exterior</h3>
+                        <div class="upload-zone" data-category="exterior">
+                            <input type="file" id="upload-exterior" accept="image/*" multiple class="file-input">
+                            <label for="upload-exterior" class="upload-label">
+                                <div class="upload-icon">📸</div>
+                                <div class="upload-text">
+                                    <strong>Click to upload</strong> or drag and drop
+                                </div>
+                                <div class="upload-hint">Front, back, and sides of home</div>
+                            </label>
+                            <div class="preview-container" id="preview-exterior"></div>
+                        </div>
+                    </div>
+
+                    <div class="upload-category">
+                        <h3>🍳 Kitchen</h3>
+                        <div class="upload-zone" data-category="kitchen">
+                            <input type="file" id="upload-kitchen" accept="image/*" multiple class="file-input">
+                            <label for="upload-kitchen" class="upload-label">
+                                <div class="upload-icon">📸</div>
+                                <div class="upload-text">
+                                    <strong>Click to upload</strong> or drag and drop
+                                </div>
+                                <div class="upload-hint">Cabinets, countertops, appliances</div>
+                            </label>
+                            <div class="preview-container" id="preview-kitchen"></div>
+                        </div>
+                    </div>
+
+                    <div class="upload-category">
+                        <h3>🛁 Bathrooms</h3>
+                        <div class="upload-zone" data-category="bathrooms">
+                            <input type="file" id="upload-bathrooms" accept="image/*" multiple class="file-input">
+                            <label for="upload-bathrooms" class="upload-label">
+                                <div class="upload-icon">📸</div>
+                                <div class="upload-text">
+                                    <strong>Click to upload</strong> or drag and drop
+                                </div>
+                                <div class="upload-hint">Fixtures, tiles, vanities</div>
+                            </label>
+                            <div class="preview-container" id="preview-bathrooms"></div>
+                        </div>
+                    </div>
+
+                    <div class="upload-category">
+                        <h3>🛋️ Living Spaces</h3>
+                        <div class="upload-zone" data-category="living">
+                            <input type="file" id="upload-living" accept="image/*" multiple class="file-input">
+                            <label for="upload-living" class="upload-label">
+                                <div class="upload-icon">📸</div>
+                                <div class="upload-text">
+                                    <strong>Click to upload</strong> or drag and drop
+                                </div>
+                                <div class="upload-hint">Living room, bedrooms, flooring</div>
+                            </label>
+                            <div class="preview-container" id="preview-living"></div>
+                        </div>
+                    </div>
+
+                    <div class="upload-category">
+                        <h3>🌳 Landscaping</h3>
+                        <div class="upload-zone" data-category="landscaping">
+                            <input type="file" id="upload-landscaping" accept="image/*" multiple class="file-input">
+                            <label for="upload-landscaping" class="upload-label">
+                                <div class="upload-icon">📸</div>
+                                <div class="upload-text">
+                                    <strong>Click to upload</strong> or drag and drop
+                                </div>
+                                <div class="upload-hint">Yard, garden, outdoor spaces</div>
+                            </label>
+                            <div class="preview-container" id="preview-landscaping"></div>
+                        </div>
+                    </div>
+
+                    <div class="upload-category">
+                        <h3>📋 Other Areas</h3>
+                        <div class="upload-zone" data-category="other">
+                            <input type="file" id="upload-other" accept="image/*" multiple class="file-input">
+                            <label for="upload-other" class="upload-label">
+                                <div class="upload-icon">📸</div>
+                                <div class="upload-text">
+                                    <strong>Click to upload</strong> or drag and drop
+                                </div>
+                                <div class="upload-hint">Garage, basement, special features</div>
+                            </label>
+                            <div class="preview-container" id="preview-other"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>💡 Tip:</strong> Upload clear, well-lit photos for the best analysis. You can upload multiple photos per category.
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <button class="btn-secondary" onclick="goToPage(1)">
+                    <span>←</span>
+                    Back
+                </button>
+                <button class="btn-primary btn-next" onclick="goToPage(3)">
+                    Next: Property Condition
+                    <span>→</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Page 3: Condition Assessment & Improvements -->
+        <div class="page" id="page3">
+            <div class="card">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <h2>Property Condition Assessment</h2>
+                </div>
+                <p class="section-description">Rate the current condition of key areas in your property.</p>
+                
+                <div class="condition-grid">
+                    <div class="condition-item">
+                        <label>Kitchen Condition</label>
+                        <div class="rating-buttons" data-condition="kitchen">
+                            <button class="rating-btn" data-value="poor">Poor</button>
+                            <button class="rating-btn active" data-value="fair">Fair</button>
+                            <button class="rating-btn" data-value="good">Good</button>
+                            <button class="rating-btn" data-value="excellent">Excellent</button>
+                        </div>
+                    </div>
+                    <div class="condition-item">
+                        <label>Bathroom Condition</label>
+                        <div class="rating-buttons" data-condition="bathroom">
+                            <button class="rating-btn" data-value="poor">Poor</button>
+                            <button class="rating-btn active" data-value="fair">Fair</button>
+                            <button class="rating-btn" data-value="good">Good</button>
+                            <button class="rating-btn" data-value="excellent">Excellent</button>
+                        </div>
+                    </div>
+                    <div class="condition-item">
+                        <label>Flooring Condition</label>
+                        <div class="rating-buttons" data-condition="flooring">
+                            <button class="rating-btn" data-value="poor">Poor</button>
+                            <button class="rating-btn active" data-value="fair">Fair</button>
+                            <button class="rating-btn" data-value="good">Good</button>
+                            <button class="rating-btn" data-value="excellent">Excellent</button>
+                        </div>
+                    </div>
+                    <div class="condition-item">
+                        <label>Exterior/Paint Condition</label>
+                        <div class="rating-buttons" data-condition="exterior">
+                            <button class="rating-btn" data-value="poor">Poor</button>
+                            <button class="rating-btn active" data-value="fair">Fair</button>
+                            <button class="rating-btn" data-value="good">Good</button>
+                            <button class="rating-btn" data-value="excellent">Excellent</button>
+                        </div>
+                    </div>
+                    <div class="condition-item">
+                        <label>Roof Condition</label>
+                        <div class="rating-buttons" data-condition="roof">
+                            <button class="rating-btn" data-value="poor">Poor</button>
+                            <button class="rating-btn active" data-value="fair">Fair</button>
+                            <button class="rating-btn" data-value="good">Good</button>
+                            <button class="rating-btn" data-value="excellent">Excellent</button>
+                        </div>
+                    </div>
+                    <div class="condition-item">
+                        <label>Landscaping Condition</label>
+                        <div class="rating-buttons" data-condition="landscaping">
+                            <button class="rating-btn" data-value="poor">Poor</button>
+                            <button class="rating-btn active" data-value="fair">Fair</button>
+                            <button class="rating-btn" data-value="good">Good</button>
+                            <button class="rating-btn" data-value="excellent">Excellent</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <h2>Select Improvement Areas</h2>
+                </div>
+                <p class="section-description">Choose the improvements you're considering for your property.</p>
+                
+                <div class="improvements-grid" id="improvementsGrid">
+                    <!-- Improvements will be dynamically inserted -->
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <button class="btn-secondary" onclick="goToPage(2)">
+                    <span>←</span>
+                    Back
+                </button>
+                <button class="btn-primary btn-generate" id="generateBtn">
+                    <span>✨</span>
+                    Generate Strategy
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Page -->
+        <div class="page" id="resultsPage">
+            <div class="card results-card">
+                <h2>📊 Your Home Value Strategy</h2>
+                
+                <div class="results-summary">
+                    <div class="result-item primary">
+                        <span class="result-label">Current Value</span>
+                        <span class="result-value" id="currentValueResult">$0</span>
+                    </div>
+                    <div class="result-arrow">→</div>
+                    <div class="result-item primary success">
+                        <span class="result-label">Projected Value</span>
+                        <span class="result-value" id="projectedValueResult">$0</span>
+                    </div>
+                </div>
+
+                <div class="value-increase-card">
+                    <div class="increase-amount">
+                        <span class="increase-label">Total Value Increase</span>
+                        <span class="increase-value" id="valueIncreaseAmount">$0</span>
+                        <span class="increase-percentage" id="valueIncreasePercent">+0%</span>
+                    </div>
+                </div>
+
+                <div class="financial-summary">
+                    <div class="financial-item">
+                        <span class="financial-label">Total Investment</span>
+                        <span class="financial-value" id="totalInvestment">$0</span>
+                    </div>
+                    <div class="financial-item">
+                        <span class="financial-label">Net Gain</span>
+                        <span class="financial-value success" id="netGain">$0</span>
+                    </div>
+                    <div class="financial-item">
+                        <span class="financial-label">Average ROI</span>
+                        <span class="financial-value success" id="averageROI">0%</span>
+                    </div>
+                    <div class="financial-item">
+                        <span class="financial-label">Timeline</span>
+                        <span class="financial-value" id="totalTimeline">0 weeks</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card recommendations-card">
+                <h2>🎯 Prioritized Recommendations</h2>
+                <div class="recommendations-list" id="recommendationsList">
+                    <!-- Recommendations will be dynamically inserted -->
+                </div>
+            </div>
+
+            <div class="card timeline-card">
+                <h2>📅 Implementation Timeline</h2>
+                <div class="timeline" id="timelineList">
+                    <!-- Timeline will be dynamically inserted -->
+                </div>
+            </div>
+
+            <div class="card disclaimer-card">
+                <h3>⚠️ Important Disclaimer</h3>
+                <div class="disclaimer-content">
+                    <p><strong>For Informational Purposes Only:</strong> This tool and its results are provided for informational and entertainment purposes only. The information generated should not be considered professional advice of any kind, including but not limited to financial, legal, medical, real estate, or other professional advice.</p>
+                    
+                    <p><strong>No Warranty or Guarantee:</strong> While we strive for accuracy, we make no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability, or availability of the information, recommendations, or results provided by this tool. Any reliance you place on such information is strictly at your own risk.</p>
+                    
+                    <p><strong>AI-Generated Content:</strong> This tool uses artificial intelligence to generate content and recommendations. AI systems may produce errors, inaccuracies, or results that are not suitable for your specific situation. Always verify important information independently and consult with qualified professionals before making decisions.</p>
+                    
+                    <p><strong>Limitation of Liability:</strong> In no event shall the tool provider, its affiliates, agents, or licensors be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of this tool or the information it provides.</p>
+                    
+                    <p><strong>User Responsibility:</strong> You are solely responsible for evaluating the accuracy, completeness, and usefulness of all information and content provided. By using this tool, you acknowledge that you have read, understood, and agree to these terms.</p>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="window.print()">📄 Print Report</button>
+                <button class="btn-secondary" id="resetBtn">🔄 Start Over</button>
+            </div>
+        </div>
+
+        <div class="progress-indicator">
+            <div class="progress-step active" data-page="1">
+                <div class="progress-number">1</div>
+                <div class="progress-label">Property Info</div>
+            </div>
+            <div class="progress-step" data-page="2">
+                <div class="progress-number">2</div>
+                <div class="progress-label">Photos</div>
+            </div>
+            <div class="progress-step" data-page="3">
+                <div class="progress-number">3</div>
+                <div class="progress-label">Assessment</div>
+            </div>
+            <div class="progress-step" data-page="4">
+                <div class="progress-number">4</div>
+                <div class="progress-label">Results</div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 Home Value Maximizer. AI-powered property analysis for homeowners.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
